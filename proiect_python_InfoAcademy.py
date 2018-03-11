@@ -115,7 +115,7 @@ tabla.iesi(1001)
 tabla.intr(500)
 tabla.perisabilitati(.5)
 
-l = [fragute, lapte, ceasuri, tabla, pepeni] # lista cu produsele din magazin
+l = [fragute, lapte, ceasuri, tabla, pepeni] # lista cu instantele
 
 
 def afisare_produse():
@@ -133,7 +133,8 @@ def afisare_produse():
 
 def produse(produs):
     """
-    Daca utilizatorul introduce un produs care nu exista
+    Afiseaza fisa produsului; daca utilizatorul
+    introduce un produs care nu exista
     va primi pe ecran un mesaj de eroare
     """
     ver = 0
@@ -167,7 +168,7 @@ def situatie_grafica(produs):
                 luna = '0'+luna
             if len(an) < 4: # la fel ca la zi, doar ca anul poate fi introdus din 2 cifre
                 an = '20'+an
-            data1 = an + " " + luna + " " + zi
+            data1 = an + " " + luna + " " + zi # data pentru care vrem sa vedem tranzactiile
             data_situatie = data1.replace(" ", "-")
             var1 = [] # din cauza ca pot fi introduse mai multe intrari/iesiri in aceeasi zi, vom folosi o lista care tine cheile dictionarului
             for j in i.d: # dictionarul cu date calendaristice, de unde luam cheia
@@ -178,7 +179,7 @@ def situatie_grafica(produs):
                     lista_intrari.append(i.i[j])
                 if j in i.e: # dictionarul cu operatiunile de iesire
                     lista_iesiri.append(i.e[j])
-            if len(lista_intrari) == 0 and len(lista_iesiri) == 0:
+            if len(lista_intrari) == 0 and len(lista_iesiri) == 0: # daca listele sunt goale, nu avem ce afisa
                 print("Eroare : Nu exista suficiente date pentru generarea graficului")
             else:
                 bar = pygal.Bar(x_title='', y_title='Valoare')
@@ -205,7 +206,7 @@ def mail_export(produs):
             username = 'user@magazin.ro'
             parola = 'parolasmechera'
             expeditor = 'user@magazin.ro'
-            mesaj = str(i.fisap()) # pentru ca functia fisap nu returneaza nimic, trebuie folosita functia str()
+            mesaj = str(i.fisap()) # pentru ca functia fisap nu returneaza nimic, trebuie folosita functia str() pentru a stoca intr-o variabila textul
             try:
                 smtp_ob = smtplib.SMTP('mail.magazin.ro:25')
                 smtp_ob.login(username, parola)
@@ -218,7 +219,12 @@ def mail_export(produs):
 
 
 def mail_alert(valoare, produs):
-   if produs.sold < valoare:
+    """"
+    Trimite un mail atunci cand
+    valoarea stocului unui produs
+    scade sub o anumita valoare
+    """
+    if produs.sold < valoare:
         print("Stoc critic pentru " + produs.prod + "\nTrimitere mail de alerta ...")
         username = 'user@magazin.ro'
         parola = 'parolasmechera'
@@ -235,6 +241,10 @@ def mail_alert(valoare, produs):
 
 
 def cautare_produse(alegere):
+    """
+    Cauta produsele dupa nume
+    sau tranzactiile dupa valoarea lor
+    """
     if alegere == 1:
         lista_gasite = [] # lista in care vor fi adaugate produsele care se potrivesc pattern-ului
         patternu = ".*" + input("Introduceti numele / o parte din numele produsului cautat: ") + ".*"
