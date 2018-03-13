@@ -1,7 +1,6 @@
 from datetime import datetime
 import pygal, smtplib, re
 
-
 class Stoc:
     """Tine stocul unui depozit"""
     tot_categ = 0
@@ -66,6 +65,25 @@ class Stoc:
         print('----------------------------\n')
 
 
+    def mail_export(self):
+        """
+        Trimite fisa produsul pe mail
+        catre o adresa de mail introdusa
+        de utilizator.
+        """
+        username = 'user@magazin.ro'
+        parola = 'parolasmechera'
+        expeditor = 'user@magazin.ro'
+        mesaj = str(self.fisap()) # pentru ca functia fisap nu returneaza nimic, trebuie folosita functia str() pentru a stoca intr-o variabila textul
+        try:
+            smtp_ob = smtplib.SMTP('mail.magazin.ro:25')
+            smtp_ob.login(username, parola)
+            smtp_ob.sendmail(expeditor, destinatar, mesaj)
+            print('Mesaj expediat cu succes!')
+        except:
+            print('Mesajul nu a putut fi expediat!')
+
+
 fragute = Stoc('fragute', 'fructe', 'kg')       # cream instantele clasei
 lapte = Stoc('lapte', 'lactate', 'litru')
 ceasuri = Stoc('ceasuri', 'ceasuri')
@@ -115,6 +133,7 @@ tabla.iesi(1001)
 tabla.intr(500)
 tabla.perisabilitati(.5)
 
+
 l = [fragute, lapte, ceasuri, tabla, pepeni] # lista cu instantele
 
 
@@ -124,9 +143,9 @@ def afisare_produse():
     atunci cand utilizatorul trebuie sa aleaga
     un produs despre care ii vor fi afisate anumite informatii
     """
-    lista_produse = ""
+    lista_produse = "" # incepem cu un sir gol, in care vom adauga numele produselor
     for i in l:
-        lista_produse += i.prod + " "
+        lista_produse += i.prod + " " # separate de spatiu
     print("Produsele disponibile sunt: " + lista_produse)
     return lista_produse
 
@@ -137,9 +156,9 @@ def produse(produs):
     introduce un produs care nu exista
     va primi pe ecran un mesaj de eroare
     """
-    ver = 0
+    ver = 0 # variabila cu care verificam daca produsul exista
     for i in l:
-        if produs == i.prod:
+        if produs == i.prod: # daca exista, apelam metoda fisap
             i.fisap()
             ver = 1
     if ver == 0:
@@ -153,7 +172,7 @@ def situatie_grafica(produs):
     pentru o anumita data, pentru un anumit
     produs
     """
-    ver = 0
+    ver = 0 # variabila cu care verificam daca produsul exista
     lista_intrari = []
     lista_iesiri = []
     for i in l:
@@ -193,29 +212,19 @@ def situatie_grafica(produs):
         print("Eroare: Produsul cautat nu se gaseste in baza noastra de date!")
 
 
-def mail_export(produs):
+def situatie_mail(produs):
     """
-    Trimite fisa produsul pe mail
-    catre o adresa de mail introdusa
-    de utilizator.
+    Apeleaza metoda mail_export
+    a instantei clasei Stoc,
+    daca aceasta exista
     """
-    ver = 0 # variabila folosita pentru a verifica daca produsul cautat exista in baza de date
+    cnt = 0 # variabila cu care verificam daca produsul exista
     for i in l:
-        if produs == i.prod:
-            ver = 1
-            username = 'user@magazin.ro'
-            parola = 'parolasmechera'
-            expeditor = 'user@magazin.ro'
-            mesaj = str(i.fisap()) # pentru ca functia fisap nu returneaza nimic, trebuie folosita functia str() pentru a stoca intr-o variabila textul
-            try:
-                smtp_ob = smtplib.SMTP('mail.magazin.ro:25')
-                smtp_ob.login(username, parola)
-                smtp_ob.sendmail(expeditor, destinatar, mesaj)
-                print('Mesaj expediat cu succes!')
-            except:
-                print('Mesajul nu a putut fi expediat!')
-    if ver == 0:
-        print("Eroare: Produsul cautat nu se gaseste in baza noastra de date!")
+        if produs == i.prod: # daca produsul este gasit, apeleaza metoda mail_export
+            i.mail_export()
+            cnt += 1 # si incrementeaza variabila
+    if cnt == 0:
+        print("Produsul nu se gaseste in baza noastra de date")
 
 
 def mail_alert(valoare, produs):
@@ -245,51 +254,69 @@ def cautare_produse(alegere):
     Cauta produsele dupa nume
     sau tranzactiile dupa valoarea lor
     """
-    if alegere == 1:
-        lista_gasite = [] # lista in care vor fi adaugate produsele care se potrivesc pattern-ului
-        patternu = ".*" + input("Introduceti numele / o parte din numele produsului cautat: ") + ".*"
-        for i in l:
-            p = re.match(patternu, i.prod,re.IGNORECASE)
-            if p:
-                lista_gasite.append(i.prod)
-        print("Au fost gasite urmatoarele produse:")
-        for i in lista_gasite:
-            print("==> " + i)
-    elif alegere == 2:
-        valoare = input("Introduceti valoare cautata: ")
-        if valoare.isnumeric(): # valoarea tranzactiei trebuie sa fie un numar
+    if alegere.isalpha(): # verificam daca alegerea facuta este una dintre cele prezentate
+        print("Optiune invalida !!!\nVa rugam sa alegeti dintre optiunile prezentate.")
+        cautare_produse(input(" --> ")) # in cazul in care nu a fost introdus un numar de la tastatura, functia se auto apeleaza
+    if alegere.isnumeric(): # alegerea trebuie sa fie neaparat un numar
+        alegere = int(alegere)
+        if alegere == 1: # pentru 1 se va realiza cautarea dupa nume
+            lista_gasite = [] # lista in care vor fi adaugate produsele care se potrivesc pattern-ului
+            patternu = ".*" + input("Introduceti numele / o parte din numele produsului cautat: ") + ".*"
             for i in l:
-                lista_gasite_intrari = []
-                lista_gasite_iesiri = []
-                for v in i.i:
-                    patternu = "^" + valoare + "$" # pentru a nu avea rezultate inexacte. De exemplu, daca introducem 10, sa nu gaseasca si valori de genul 100, 910, 2310231
-                    p = re.match(patternu, str(i.i[v]))
-                    if p:
-                        rezultat = "In data de " + str(i.d[v])[0:4] + "-" + str(i.d[v])[4:6] + "-" + str(i.d[v])[6:] + " s-au efectuat tranzactii in valoare de " + str(i.i[v])
-                        lista_gasite_intrari.append(rezultat) # daca se potriveste vreo valoare din operatiunile de intrare, aceasta este adaugata in lista
-                if len(lista_gasite_intrari) > 0: # Daca lista nu este goala vor fi afisate datele in care au avut loc tranzactiile
-                    print("\nPentru produsul: " + i.prod)
-                    print("Operatiuni de intrare:")
-                    for j in set(lista_gasite_intrari): # am folosit set pentru a elimina duplicatele
-                        print(j)
-                for v in i.e:
-                    patternu = "^" + valoare + "$"
-                    p = re.match(patternu, str(i.e[v]))
-                    if p:
-                        rezultat = "In data de " + str(i.d[v])[0:4] + "-" + str(i.d[v])[4:6] + "-" + str(i.d[v])[6:] + " s-au efectuat tranzactii in valoare de " + str(i.e[v])
-                        lista_gasite_iesiri.append(rezultat)
-                if len(lista_gasite_iesiri) > 0:
-                    print("\nPentru produsul: " + i.prod)
-                    print("Operatiuni de iesire:")
-                    for j in set(lista_gasite_iesiri):
-                        print(j)
-        else:
-            print("EROARE : Introduceti valori numerice") # daca este introdusa o valoare non-numerica, afiseaza un mesaj de eroare
-            cautare_produse(2) # si se apeleaza singura
-    else:
-        print("Optiune invalida !!!") # la fel si daca nu este 1 sau 2
-        cautare_produse(2)
+                p = re.match(patternu, i.prod,re.IGNORECASE) # nu este case sensitive
+                if p:
+                    lista_gasite.append(i.prod)
+            if len(lista_gasite) > 0: # daca exista elemente in lista, acestea vor fi afisate
+                print("Au fost gasite urmatoarele produse:")
+                for i in lista_gasite:
+                    print("==> " + i)
+            else:
+                print("Nu au fost gasite produse cu acest nume")
+        elif alegere == 2: # pentru 2, se va cauta dupa valoarea tranzactiei
+            valoare = input("Introduceti valoare cautata: ")
+            if valoare.isnumeric(): # valoarea tranzactiei trebuie sa fie un numar
+                cnt1 = 0  # variabile folosite pentru a determina daca nu au fost gasite tranzactii de intrare / iesire de o anumita valoare
+                cnt2 = 0
+                for i in l:
+                    lista_gasite_intrari = []
+                    lista_gasite_iesiri = []
 
+                    for v in i.i:
+                        patternu = "^" + valoare + "$" # pentru a nu avea rezultate inexacte. De exemplu, daca introducem 10, sa nu gaseasca si valori de genul 100, 910, 2310231
+                        p = re.match(patternu, str(i.i[v]))
+                        if p:
+                            rezultat = "In data de " + str(i.d[v])[0:4] + "-" + str(i.d[v])[4:6] + "-" + str(i.d[v])[6:] + " s-au efectuat tranzactii in valoare de " + str(i.i[v])
+                            lista_gasite_intrari.append(rezultat) # daca se potriveste vreo valoare din operatiunile de intrare, aceasta este adaugata in lista
+                    if len(lista_gasite_intrari) > 0: # Daca lista nu este goala vor fi afisate datele in care au avut loc tranzactiile
+                        cnt1+=1
+                        print("\nPentru produsul: " + i.prod)
+                        print("Operatiuni de intrare:")
+                        for j in set(lista_gasite_intrari): # am folosit set pentru a elimina duplicatele
+                            print(j)
+                        print("*"*30)
+                    for v in i.e:
+                        patternu = "^" + valoare + "$"
+                        p = re.match(patternu, str(i.e[v]))
+                        if p:
+                            rezultat = "In data de " + str(i.d[v])[0:4] + "-" + str(i.d[v])[4:6] + "-" + str(i.d[v])[6:] + " s-au efectuat tranzactii in valoare de " + str(i.e[v])
+                            lista_gasite_iesiri.append(rezultat)
+                    if len(lista_gasite_iesiri) > 0:
+                        cnt2+=1
+                        print("\nPentru produsul: " + i.prod)
+                        print("Operatiuni de iesire:")
+                        for j in set(lista_gasite_iesiri):
+                            print(j)
+                        print("*"*30)
+                if cnt1 == 0: # daca aceste variabile sunt 0, inseamna ca nu au fost gasite tranzactii
+                    print("Nu au fost gasite tranzactii de intrare cu aceasta valoare")
+                if cnt2 == 0:
+                    print("Nu au fost gasite tranzactii de iesire cu aceasta valoare")
+            else:
+                print("EROARE : Introduceti valori numerice") # daca este introdusa o valoare non-numerica, afiseaza un mesaj de eroare
+                cautare_produse('2') # si se apeleaza singura
+        else:
+            print("Optiune invalida !!!") # la fel si daca nu este 1 sau 2
+            cautare_produse(input(" --> "))
 
 
 dict_alerta = {lapte: 30, fragute: 40, pepeni: 300, ceasuri: 30, tabla: 1000} # dictionar care contine valorile la care sunt trimise alertele
@@ -317,13 +344,12 @@ while opt != 0:
         print("Veti primi pe adresa de mail exportul ...")
         destinatar = input("Introduceti adresa dumneavoastra de email: ")
         afisare_produse()
-        mail_export(input("Numele produsului: "))
+        situatie_mail(input("Numele produsului: "))
     elif opt == 4:
         print("Alegeti din optiunile de mai jos:")
         print("Cautare dupa nume ".ljust(33) + " --> 1 ")
         print("Cautare dupa valoarea tranzactiei".ljust(33) + " --> 2 ")
-        alegere = int(input(" --> "))
-        cautare_produse(alegere)
+        cautare_produse(input(" --> "))
     elif opt == 0:
         print("La revedere!!!")
         break
