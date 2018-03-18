@@ -26,25 +26,24 @@ then
         printf "Overwritting it right now ...\n"
         printf "search salajan.ro\nnameserver 192.168.100.123\nnameserver 192.168.100.1\n" > /etc/resolv.conf
         printf "\nMaking sure it doesn't happen again ...\n"
-        chattr +i /etc/resolv.conf
+        chattr +i /etc/resolv.conf || cnt=1
         for i in `lsattr /etc/resolv.conf | sed "s/-/ /g"`
         do
                 if [[ "$i" == "i" ]]
                 then
-                        cnt=1
+                        cnt=0
                         break
                 fi
         done
+        if [ $cnt -eq 1 ]
+        then
+                printf "Making /etc/resolv.conf immutable failed. Please try to do it manually !\n"
+        else
+                printf "The files /etc/resolv.conf is immutable.\n"
+        fi
+
 else
         printf "The /etc/resolv.conf file contains the DNS server, moving on ...\n"
-fi
-
-
-if [ $cnt -eq 1 ]
-then
-        printf "The file /etc/resolv.conf is immutable now!\n"
-else
-        printf "The file /etc/resolv.conf is still not immutable, please try to do it manually\n"
 fi
 
 
