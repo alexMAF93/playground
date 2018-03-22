@@ -9,6 +9,15 @@ else
 fi
 
 
+if `/usr/sbin/ping -c 3 192.168.100.123 2>&1 >/dev/null`
+then
+        printf "The DNS server is up and running\n"
+else
+        printf "The DNS server is down\nNothing to do ...\n"
+        exit 27
+fi
+
+
 if [ -s /etc/resolv.conf ]
 then
         printf "/etc/resolv.conf exists\n"
@@ -84,3 +93,4 @@ else
         nslookup slalexvr
         printf "\nIt's still not working\nOut of ideas...\n"
 fi
+
