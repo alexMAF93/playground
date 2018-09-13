@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ `nslookup slalexvr 2>&1 >/dev/null; echo $?` == "0" ]]
+if [[ `nslookup x555lb 2>&1 >/dev/null; echo $?` == "0" ]]
 then
         printf "DNS is working properly ...\n"
         exit 0
