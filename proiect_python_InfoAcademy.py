@@ -1,3 +1,6 @@
+#!/usr/bin/python3.6
+
+
 from datetime import datetime
 import pygal, smtplib, re
 
