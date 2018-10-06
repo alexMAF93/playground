@@ -12,7 +12,7 @@ if [[ ! "$OLD_IP" == "$NEW_IP" ]]
 then
 	cat $DIR/config_file | sed "s/IP_TO_BE_REPLACED/${NEW_IP}/" > $DIR/config.php
 	chown apache:apache $DIR/config.php
-	ssmtp mitroi.alex93@gmail.com <<-EOF
+	/usr/sbin/ssmtp mitroi.alex93@gmail.com <<-EOF
 	To: Alex Mitroi
 	From: Alex Mitroi
 	Subject: External IP for $HOSTNAME
