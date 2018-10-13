@@ -31,17 +31,17 @@ banner('Lists')
 list1 = ['a', 'b', 'c']
 print('Original list: ', list1)
 list1[0] = 1
-print('Modified list (part one) : ', list1) # lists are mutable
+print('Modified list (part one) :', list1) # lists are mutable
 list1[1:] = [2, 3]
-print('Modified list (part two) : ', list1) # slice + replace
+print('Modified list (part two) :', list1) # slice + replace
 list1[1:] = []
-print('Modified list (part three) : ', list1) # slice + remove
+print('Modified list (part three) :', list1) # slice + remove
 list1[:] = []
-print('Modified list (part four) : ', list1) # replace everything with an empty len
+print('Modified list (part four) :', list1) # replace everything with an empty len
 list2 = ['a', 'b', 'c']
 list3 = [1, 2, 3]
 list4 = [list2, list3]
-print('A list made of lists : ', list4)
+print('A list made of lists :', list4)
 
 
 banner('The FOR loop')
@@ -81,3 +81,4 @@ Lines shoudn't exceed 79 characters
 Comments on a line of their own
 Use docstrings
 """)
+
