@@ -82,3 +82,70 @@ Comments on a line of their own
 Use docstrings
 """)
 
+
+banner('Tuples')
+t = 12345, 44, 'hello'  # this operation is called packing
+print('This is the t tuple', t)
+print('The tuple t was defined like this: t = 12345, 44, \'hello\'')
+# tuples are immutable but they contain muttable objects (e.g.: lists)
+# empty tuple : empty = ()
+# single element tuple: singleton = 'abc', 
+at, bt, ct = t # this operation is called unpacking
+print("Unpacking the t tuple in 3 variables:") 
+print("at =", at)
+print("bt =", bt)
+print("ct =", ct)
+
+
+banner("Sets")
+# Unordered collection with no duplicate elements
+# Set objects also support mathematical operations like union, intersection, difference, and symmetric difference.
+print('Creating an empty set : aset = set()')
+aset = set()
+print(aset)
+print("Creating a set with 3 elements : bset = {'a', 1, 'c'}")
+bset = {'a', 1, 'c'}
+print(bset)
+
+
+banner("Dictionaries")
+# Dictionaries are indexed by keys
+# Only immutable objects can be used as keys: strings, numbers, tuples
+# If a tuple contains a mutable object it cannot be used as a key
+print('Creating an empty dictionary : ad = {}')
+ad = {}
+print(ad)
+print("Creating a simple dictionary with 3 values: bd = {1:'a', 2:'b', 3:'c'}")
+bd = {1:'a', 2:'b', 3:'c'}
+print(bd)
+print('A list with the keys : ', list(bd))
+
+
+banner("in / not in")
+# These are comparison operators
+# You can check if a value occurs or not in a sequence
+# They check if two objects are really the same object; only for mutable objects
+print ('Defining an integer, ai = 2')
+ai = 2
+print('Defining a list, bi = [1, 2, 3]')
+bi = [1, 2, 3]
+print('Checking if ai is in bi')
+if ai in bi:
+    print('It is!!!')
+else:
+    print('It is not')
+print('The condition is true because ai is not mutable; ai and the 2 in bi are the same object. They have the same id:')
+print('id(ai) =',id(ai))
+print('id(bi[1]) =', id(bi[1]))
+print('Defining a list : ci = [1, 2]')
+ci = [1, 2]
+print('Checking if ci is in bi')
+if ci in bi:
+    print('It is!!!')
+else:
+    print('It is not')
+print('The condition is false because ci is mutable; ci and [1, 2] in bi are different objects. They have different ids:')
+print('id(ci) =',id(ci))
+print('id(bi[:2]) =',id(bi[:2]))
+
+banner("Modules")
