@@ -148,4 +148,32 @@ print('The condition is false because ci is mutable; ci and [1, 2] in bi are dif
 print('id(ci) =',id(ci))
 print('id(bi[:2]) =',id(bi[:2]))
 
+
 banner("Modules")
+# A module is a file containing Python definitions and statements.
+# Each module has its own private symbol table, which is used as the global symbol table by all functions defined in the module.
+print('The dir() function is used to find out which names a module defines. E.g. : dir(sys)')
+print(dir(sys))
+
+
+banner("Input / Output")
+aio = 'Python'
+bio = 'bad'
+print('Using str.format()')
+print('{} ain\'t that {}'.format(aio, bio))
+# vars() returns a dictionary containing all local variables.
+print('Using str.rjust()')
+print('Python'.rjust(30))
+print('Using str.center()')
+print('Python'.center(30,'#'))
+print('Using str.ljust()')
+print('Python'.ljust(30,'*'))
+print('File operations')
+f = open('/home/alex/git/playground/external_IP.sh', 'r')
+# f.readline() reads a single line from the file
+print(f.readline())
+# list(f) and f.readlines() reads the lines from a file in a list
+print(list(f))
+# f.write('string\n') writes a string to the file
+
+
