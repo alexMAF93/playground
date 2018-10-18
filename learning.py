@@ -175,5 +175,3 @@ print(f.readline())
 # list(f) and f.readlines() reads the lines from a file in a list
 print(list(f))
 # f.write('string\n') writes a string to the file
-
-
