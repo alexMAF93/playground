@@ -28,7 +28,8 @@ def download_song(link_to_song):
     download_options = {
     'format': 'bestaudio/best',
 	'outtmpl': '%(title)s.%(ext)s',
-	'nocheckcertificate': True, # this one can be removed if there are errors for it
+	'nocheckcertificate': True, 
+# this one can be removed if there are errors because of it
  	'postprocessors': [{
 	    'key': 'FFmpegExtractAudio',
 		'preferredcodec': 'mp3',
