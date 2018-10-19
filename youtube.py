@@ -39,8 +39,6 @@ def download_song(link_to_song):
     with youtube_dl.YoutubeDL(download_options) as dl:
         dl.download([link_to_song])
 	
-	
-		
 
 link_to_song = str(input('Link: '))
 download_song(link_to_song)
