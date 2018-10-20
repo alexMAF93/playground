@@ -40,7 +40,10 @@ def download_song(link_to_song):
     with youtube_dl.YoutubeDL(download_options) as dl:
         dl.download([link_to_song])
 	
+if len(sys.argv) > 2:
+    print("Only one song at a time, please!")
+else:
+    link_to_song = sys.argv[1]
+    download_song(link_to_song)
+    remove_webm_files()
 
-link_to_song = sys.argv[1]
-download_song(link_to_song)
-remove_webm_files()
