@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-import os, youtube_dl, re
+import os, youtube_dl, re, sys
 
 
 def remove_webm_files():
@@ -41,6 +41,6 @@ def download_song(link_to_song):
         dl.download([link_to_song])
 	
 
-link_to_song = str(input('Link: '))
+link_to_song = sys.argv[1]
 download_song(link_to_song)
 remove_webm_files()
