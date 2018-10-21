@@ -16,7 +16,7 @@ import smtplib
 t = smtplib.SMTP("smtp.gmail.com", 587)
 t.ehlo()
 t.starttls()
-t.login("maf.alex93@gmail.com", "parolasmechera")
+t.login("maf.alex93@gmail.com", "hjk678")
 
 
 t.sendmail("maf.alex93@gmail.com", "mitroi.alex93@gmail.com", msg.as_string())
