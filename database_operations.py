@@ -29,7 +29,6 @@ def database_ops(option, value=""):
         database = 'jokes')
     mycursor = mydb.cursor()
 
-# the query
     if option == "-a":
         query = "INSERT INTO jokes (email) VALUES ('" + value + "')"
     elif option == "-r":
@@ -39,11 +38,9 @@ def database_ops(option, value=""):
     except:
         print('There was an error when we tried to add the email address in our database')
     else:
-    # changes must be commited
         if option == "-a":
             mydb.commit()
             print(mycursor.rowcount, 'record inserted.')
-	# the readings must be printed
         elif option == "-r":
             for (email, reg_date) in mycursor:
                 print(email, 'registered at',reg_date)
