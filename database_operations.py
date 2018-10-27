@@ -27,8 +27,8 @@ def database_ops(option, value=""):
         user = 'root', 
         passwd = 'asd123', 
         database = 'jokes')
-
     mycursor = mydb.cursor()
+
 # the query
     if option == "-a":
         query = "INSERT INTO jokes (email) VALUES ('" + value + "')"
@@ -43,6 +43,7 @@ def database_ops(option, value=""):
         if option == "-a":
             mydb.commit()
             print(mycursor.rowcount, 'record inserted.')
+	# the readings must be printed
         elif option == "-r":
             for (email, reg_date) in mycursor:
                 print(email, 'registered at',reg_date)
