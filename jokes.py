@@ -49,7 +49,7 @@ for i in range(len(joke) - 1):
 msg = MIMEText(MESSAGE)
 msg["Subject"] = "Esti cel mai tare!!!"
 msg["From"] = "alex"
-msg["To"] = "andrei"
+msg["To"] = "everyone"
 recipients = sys.argv[1:]
 
 
