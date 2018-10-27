@@ -4,34 +4,65 @@
 import mysql.connector, sys
 
 
-# connecting to the database
-mydb = mysql.connector.connect(
-    host = '127.0.0.1',
-    user = 'root', # I am gROOT
-    passwd = 'asd123', # it's not my most clever password
-    database = 'jokes'
-    ) # done
-    
+def usage():
+    """
+    this function displays the
+    options of this script
+    """
+    print("Usage:", sys.argv[0], "OPTION [ARGUMENT]")
+    print("""
+    OPTION:
+        -a,
+            add an email address to the database;
+            this option requires an argument, and it must be the email address;
+        -r,
+            read the email addresses from the database;
+            this option does not require an argument;
+            
+    """)
 
-mycursor = mydb.cursor()  # a MySQLCursor object
 
-try:
-    value = sys.argv[1] # an argument must be provided
-except:
-    print('You must specify an email address')
-else:
-    if '@' in value:
-	# the query
+def database_ops(option, value=""):
+    mydb = mysql.connector.connect(host = '127.0.0.1', 
+        user = 'root', 
+        passwd = 'asd123', 
+        database = 'jokes')
+
+    mycursor = mydb.cursor()
+# the query
+    if option == "-a":
         query = "INSERT INTO jokes (email) VALUES ('" + value + "')"
-        try:
-            mycursor.execute (query)
-        except:
-            print('There was an error when we tried to add the email address in our database')
-        else:
-		# changes must be commited
+    elif option == "-r":
+        query = "SELECT email, reg_date FROM jokes"
+    try:
+        mycursor.execute (query)
+    except:
+        print('There was an error when we tried to add the email address in our database')
+    else:
+    # changes must be commited
+        if option == "-a":
             mydb.commit()
             print(mycursor.rowcount, 'record inserted.')
-            mycursor.close()
-            mydb.close()
+        elif option == "-r":
+            for (email, reg_date) in mycursor:
+                print(email, 'registered at',reg_date)
+        mycursor.close()
+        mydb.close()
+
+
+if len(sys.argv) == 3:
+    if sys.argv[1] == "-a": 
+        value = sys.argv[2]
+        if '@' in value:
+            database_ops("-a", value)
+        else:
+            print('You must specify an email address')
     else:
-        print('You must specify an email address')
+        usage()
+elif len(sys.argv) == 2:
+    if sys.argv[1] == "-r":
+        database_ops("-r")
+    else:
+        usage()
+else:
+    usage()
