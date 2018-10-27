@@ -2,7 +2,33 @@
 
 
 from email.mime.text import MIMEText
-import smtplib, urllib.request, re
+import smtplib, urllib.request, re, sys
+
+
+def check_if_email(list_of_emails):
+    check = 0
+    for email in list_of_emails:
+        if not '@' in str(email):
+            check = 0
+            break
+        else:
+            check+=1
+    if check == 0:
+        return False
+    else:
+        return True
+
+
+if len(sys.argv) < 2:
+    print('You must provide at least an email address as argument')
+    sys.exit(7)
+elif not check_if_email(sys.argv[1:]):
+    print('Please write email addresses!')
+    sys.exit(7)
+else:
+    print('A joke will be sent to these email addresses:')
+    for email in sys.argv[1:]:
+        print(email)
 
 
 url = "http://www.rinkworks.com/jokes/random.cgi"
@@ -24,7 +50,7 @@ msg = MIMEText(MESSAGE)
 msg["Subject"] = "Esti cel mai tare!!!"
 msg["From"] = "alex"
 msg["To"] = "andrei"
-recipients = ['mitroi.alex93@gmail.com', 'dina.vlad.andrei@gmail.com']
+recipients = sys.argv[1:]
 
 
 t = smtplib.SMTP("smtp.gmail.com", 587)
