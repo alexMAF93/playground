@@ -23,6 +23,11 @@ def usage():
 
 
 def database_ops(option, value=""):
+    """
+	this function allows you to add
+	a new entry in the jokes database
+	or read all the entries from it
+	"""
     mydb = mysql.connector.connect(host = '127.0.0.1', 
         user = 'root', 
         passwd = 'asd123', 
