@@ -2,6 +2,7 @@
 
 
 from email.mime.text import MIMEText
+from subprocess import PIPE, Popen
 import smtplib, urllib.request, re, sys
 
 
@@ -18,18 +19,19 @@ def check_if_email(list_of_emails):
     else:
         return True
 
+        
+recipients = [] # here we will have the email addresses
 
-if len(sys.argv) < 2:
-    print('You must provide at least an email address as argument')
-    sys.exit(7)
-elif not check_if_email(sys.argv[1:]):
-    print('Please write email addresses!')
-    sys.exit(7)
-else:
-    print('A joke will be sent to these email addresses:')
-    for email in sys.argv[1:]:
-        print(email)
+get_emails = Popen(['/home/alex/git/playground/database_operations.py', '-r'], stdout=PIPE)
+for bytes in get_emails.stdout:
+    line = bytes.decode()
+    recipients.append(line.split()[0])
+    
 
+if not check_if_email(recipients):
+    print('ERROR: database does not contain just email addresses!')
+    sys.exit(7)
+    
 
 url = "http://www.rinkworks.com/jokes/random.cgi"
 joke = urllib.request.urlopen(url).readlines()
@@ -50,7 +52,6 @@ msg = MIMEText(MESSAGE)
 msg["Subject"] = "Esti cel mai tare!!!"
 msg["From"] = "alex"
 msg["To"] = "everyone"
-recipients = sys.argv[1:]
 
 
 t = smtplib.SMTP("smtp.gmail.com", 587)
