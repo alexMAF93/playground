@@ -3,6 +3,10 @@
 
 import os, sys
 
+# text decorations
+BOLD_UND='\033[1m\033[4m\033[94m'
+END='\033[0m'
+
 
 def usage():
     print("""
@@ -23,9 +27,9 @@ def walking_through(directory, number_of_del):
     reset_number_of_del = number_of_del
     for item in os.listdir(directory):
         if os.path.isfile(os.path.join(directory,item)):
-            print('   ' * number_of_del + '|--f-- ' + item)
+            print('   ' * number_of_del + '|——f—— ' + item)
         elif os.path.isdir(os.path.join(directory,item)):
-            print('   ' * number_of_del + '|--d-- ' + item + '/')
+            print('   ' * number_of_del + '|——d—— ' + BOLD_UND + item + '/' + END)
             if len(os.listdir(os.path.join(directory,item))) > 0:
                 number_of_del += 1
                 walking_through(os.path.join(directory,item), number_of_del)
@@ -43,7 +47,7 @@ else:
     sys.exit(0)
     
 if os.path.isdir(directory):
-    print(directory)
+    print(BOLD_UND + directory + END)
     print('|')
     number_of_del = 0
     walking_through(directory, number_of_del)
