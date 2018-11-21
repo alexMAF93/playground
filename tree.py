@@ -4,7 +4,7 @@
 import os, sys
 
 # text decorations
-BOLD_UND='\033[1m\033[4m\033[94m'
+BOLD_UND='\033[1m\033[94m'
 END='\033[0m'
 
 
