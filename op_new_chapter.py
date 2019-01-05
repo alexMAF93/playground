@@ -7,6 +7,7 @@ import re # serching for patterns
 import os
 from email.mime.text import MIMEText
 import smtplib # when a new chapter comes up, an email will be sent
+from useful_functions import get_credentials_for_email as get_creds # custom function to get the credentials for the email account
 
 
 def send_email():
@@ -22,12 +23,14 @@ You can read it here: https://readms.net{}
     msg["Subject"] = "New manga chapter"
     msg["From"] = "Alex"
     msg["To"] = "Alex"
+    ACCOUNT = get_creds('/home/alex/parole/send_email.txt')[0]
+    PASSWORD = get_creds('/home/alex/parole/send_email.txt')[1].replace('\n', '')
 
     t = smtplib.SMTP("smtp.gmail.com", 587)
     t.ehlo()
     t.starttls()
-    t.login("maf.alex93@gmail.com", "parolasmechera")
-    t.sendmail("maf.alex93@gmail.com", send_to, msg.as_string())
+    t.login(ACCOUNT, PASSWORD)
+    t.sendmail(ACCOUNT, send_to, msg.as_string())
     t.quit()
 
 
