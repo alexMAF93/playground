@@ -3,7 +3,7 @@
 
 import urllib.request # we need the source of the page
 from bs4 import BeautifulSoup as BS # BS is used to parse the html file
-import re # serching for patterns
+import re # searching for patterns
 import os
 from email.mime.text import MIMEText
 import smtplib # when a new chapter comes up, an email will be sent
