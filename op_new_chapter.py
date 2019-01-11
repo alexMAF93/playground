@@ -37,7 +37,7 @@ You can read it here: https://readms.net{}
 # the latest chapter's date will be kept in a file in 
 # order to compare it with the one retrieved
 # every time the script runs
-FILE = '/tmp/one_piece_chapter.txt'
+FILE = '/var/tmp/one_piece_chapter.txt'
 
 
 url = 'https://readms.net/' # the link of the manga site
