@@ -77,12 +77,13 @@ if link_search2:
 
 if os.path.isfile(FILE):
     with open(FILE, 'r') as f:
-        last_published_date = f.read()
-    if last_published_date != published_date:
+        last_chapter_number = f.read()
+    if last_chapter_number != chapter_number:
         with open(FILE, 'w') as f:
-            f.write(published_date)
+            f.write(chapter_number)
         send_email()        
 else:
     with open(FILE, 'w') as f:
-        f.write(published_date)    
+        f.write(chapter_number)    
     send_email()
+
