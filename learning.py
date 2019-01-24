@@ -19,7 +19,7 @@ print("""OPTIONS:
 	-x,
 		execute
 	""")
-	
+
 # with "+" you concatenate strings -- both operands must be strings
 
 string1 = "Python"
@@ -50,19 +50,19 @@ for n in range(2,10):
 	     if n % x == 0:
 		     break
     else:
-        print(n, 'is a prime number')  
+        print(n, 'is a prime number')
 		# you can use else for a for loop :O. Else clause runs when no break occurs
 
-		
+
 banner('Functions')
 # Functions without a return value, return None by default
 # The execution of a function introduces a new symbol table used for the local variables of the function. More precisely, all variable assignments in a function store the value in the local symbol table; whereas variable references first look in the local symbol table, then in the local symbol tables of enclosing functions, then in the global symbol table, and finally in the table of built-in names. Thus, global variables cannot be directly assigned a value within a function (unless named in a global statement), although they may be referenced.
 
-#A function definition introduces the function name in the current symbol table. The value of the function name has a type that is recognized by the interpreter as a user-defined function. This value can be assigned to another name which can then also be used as a function.
+# A function definition introduces the function name in the current symbol table. The value of the function name has a type that is recognized by the interpreter as a user-defined function. This value can be assigned to another name which can then also be used as a function.
 
 def func1 ():
     """
-	test function 
+	test function
 	""" # it seems that it's good practice to document functions
     print('\tThis is a test function to see if the renaming mechanism works!')
 
@@ -89,9 +89,9 @@ print('This is the t tuple', t)
 print('The tuple t was defined like this: t = 12345, 44, \'hello\'')
 # tuples are immutable but they contain muttable objects (e.g.: lists)
 # empty tuple : empty = ()
-# single element tuple: singleton = 'abc', 
+# single element tuple: singleton = 'abc',
 at, bt, ct = t # this operation is called unpacking
-print("Unpacking the t tuple in 3 variables:") 
+print("Unpacking the t tuple in 3 variables:")
 print("at =", at)
 print("bt =", bt)
 print("ct =", ct)
@@ -175,5 +175,3 @@ print(f.readline())
 # list(f) and f.readlines() reads the lines from a file in a list
 print(list(f))
 # f.write('string\n') writes a string to the file
-
-
