@@ -69,7 +69,7 @@ if link_search:
 
 
 # formatting the link again to add it easily in the message
-link_format2 = '<a href="(.*)"><.*'
+link_format2 = '<a href="(.*[0-9])"><.*'
 link_search2 = re.search(link_format2, link_op, re.IGNORECASE)
 if link_search2:
     chapter_link = link_search2.group(1)
