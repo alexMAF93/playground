@@ -59,7 +59,7 @@ for link in str(links_in_page).split(','): # going through each link
 
 # this is how the links are formatted: date, manga name, chapter number and the title of the chapter
 # everything between ( ) is a group and can be retrieved
-link_format = '<a href="/r/one_piece.*><span class="pull-right">(.*)</span>(.*)<strong>(.*)</strong><em>(.*)'
+link_format = '<a href="/r/one_piece.*><span class="pull-right">(.*)</span><i.*></i>(.*)<strong>(.*)</strong><em>(.*)</em.*'
 link_search = re.search(link_format, link_op, re.IGNORECASE)
 if link_search:
     published_date = link_search.group(1)
