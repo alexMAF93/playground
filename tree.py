@@ -54,3 +54,5 @@ if os.path.isdir(directory):
 else:
     print('ERROR: The argument you provided is not a directory\n\n\n')
     sys.exit(7)
+
+#EOF
