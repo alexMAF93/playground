@@ -67,12 +67,12 @@ if __name__ == "__main__":
     now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
     
     if not current_ip:
-        write_to_file('/tmp/external_ip_log.txt', 
+        write_to_file('/tmp/external_ip.log', 
                     "{}: The external IP cannot be retrieved.\n".format(now),
                     "a+"
         )    
     if not old_ip:
-        write_to_file('/tmp/external_ip_log.txt',
+        write_to_file('/tmp/external_ip.log',
                     "{}: Cannot retrieve the IP from {}.\n".format(now, filepath),
                     "a+"
         )
@@ -80,12 +80,12 @@ if __name__ == "__main__":
     if current_ip != old_ip and current_ip != "":
         message = "New external IP: {}".format(current_ip)
         send_email(message)
-        write_to_file('/tmp/external_ip_log.txt',
+        write_to_file('/tmp/external_ip.log',
                     "{}: {}; Old IP: {};Action: Mail sent!\n".format(now, message, old_ip),
                     "a+"
         )
     elif old_ip and current_ip:
-        write_to_file('/tmp/external_ip_log.txt',
+        write_to_file('/tmp/external_ip.log',
                     "{}: Nothing changed - {} = {}\n".format(now, old_ip, current_ip),
                     "a+"
         )

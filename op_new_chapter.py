@@ -2,7 +2,10 @@
 
 
 import urllib.request, re, sys
+from datetime import datetime
 from bs4 import BeautifulSoup as BS
+from external_IP import send_email
+from external_IP import write_to_file
 
 
 def get_manga(manga_name): # gets the first link that matches the words specified
@@ -36,10 +39,33 @@ Released {}
     return output
 
 
+def check_if_email_was_sent(file_path, now, manga_name):
+    REGEX = re.compile(".*{}.*{}.*Email sent.*".format(now, manga_name))
+    with open(file_path) as f:
+        content = f.readlines()
+    for line in content:
+        if re.search(REGEX, line):
+            return True
+    return False
+
+
 def main():
+    file_path = '/tmp/manga.log'
+    now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
     if len(sys.argv) > 1:
         manga_name = sys.argv[1:]
-        print(parse_link(get_manga(' '.join(manga_name).replace(' ', '_'))))
+        result = parse_link(get_manga(' '.join(manga_name).replace(' ', '_')))
+        if 'Today' in result and not check_if_email_was_sent(file_path, now.split()[0], ' '.join(manga_name).title()):
+            send_email(text_message=result,
+                       subject='New {} chapter'.format(' '.join(manga_name).title())
+        )
+            write_to_file(file_path,
+                     "{}: New {} chapter {} Email sent\n".format(now, ' '.join(manga_name).title(), result.replace('\n', '|')),
+                     'a+')
+        else:
+            write_to_file(file_path,
+                     "{}: No new {} chapter found.\n".format(now,  ' '.join(manga_name).title()),
+                     "a+")
     else:
         print('You must specify the name of the manga')
 
