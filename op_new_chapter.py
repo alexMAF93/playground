@@ -33,10 +33,7 @@ def parse_link(link_manga): # gets the name, chapter and the date from the link
             manga = link_search.group(3)
             chapter = link_search.group(4)
             title = link_search.group(5)
-            output = """
-{}, {} - {}
-Released {}
-    """.format(manga.strip(), chapter, title, published_date)
+            output = "{}, {} - {}; Released {}".format(manga.strip(), chapter, title, published_date)
     else:
         output = "Nothing found"
     return output
@@ -58,12 +55,12 @@ def main():
     if len(sys.argv) > 1:
         manga_name = sys.argv[1:]
         result = parse_link(get_manga(' '.join(manga_name).replace(' ', '_')))
-        if 'Today' in result and not check_if_email_was_sent(file_path, now.split()[0], ' '.join(manga_name).title()):
+        if 'Today' in result and not check_if_email_was_sent(file_path, now.split()[0], result):
             send_email(text_message=result,
                        subject='New {} chapter'.format(' '.join(manga_name).title())
         )
             write_to_file(file_path,
-                     "{}: New {} chapter {} Email sent\n".format(now, ' '.join(manga_name).title(), result.replace('\n', '|')),
+                     "{}: New {} chapter {} Email sent\n".format(now, ' '.join(manga_name).title(), result),
                      'a+')
         else:
             write_to_file(file_path,
