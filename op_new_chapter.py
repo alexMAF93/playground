@@ -50,7 +50,7 @@ def check_if_email_was_sent(file_path, now, manga_name):
 
 
 def main():
-    file_path = '/tmp/manga.log'
+    file_path = '/var/tmp/manga.log'
     now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
     if len(sys.argv) > 1:
         manga_name = sys.argv[1:]
