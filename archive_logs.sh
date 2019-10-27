@@ -2,7 +2,7 @@
 
 
 DATE=`date +%m_%d_%Y`
-ARC_DIR=/tmp/ARCHIVED_LOGS/
+ARC_DIR=/var/tmp/ARCHIVED_LOGS/
 
 if [[ ! -d $ARC_DIR ]]
 then
@@ -10,7 +10,7 @@ then
 fi
 
 
-cd /tmp
+cd /var/tmp
 tar -cvzf old_logs_${DATE}.tar.gz *.log
 mv old_logs_${DATE}.tar.gz $ARC_DIR
 rm *.log
