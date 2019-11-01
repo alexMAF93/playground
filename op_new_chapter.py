@@ -39,8 +39,8 @@ def parse_link(link_manga): # gets the name, chapter and the date from the link
     return output
 
 
-def check_if_email_was_sent(file_path, now, manga_name):
-    REGEX = re.compile(".*{}.*{}.*Email sent.*".format(now, manga_name))
+def check_if_email_was_sent(file_path, result):
+    REGEX = re.compile(".*{}.*".format(result))
     with open(file_path) as f:
         content = f.readlines()
     for line in content:
@@ -55,7 +55,8 @@ def main():
     if len(sys.argv) > 1:
         manga_name = sys.argv[1:]
         result = parse_link(get_manga(' '.join(manga_name).replace(' ', '_')))
-        if 'Today' in result and not check_if_email_was_sent(file_path, now.split()[0], result):
+        # print(result)
+        if 'Today' in result and not check_if_email_was_sent(file_path, result):
             send_email(text_message=result,
                        subject='New {} chapter'.format(' '.join(manga_name).title())
         )
