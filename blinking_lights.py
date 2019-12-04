@@ -25,9 +25,9 @@ logging.basicConfig(filename=logname, filemode='a', format='%(asctime)s - %(leve
 lightpin1 = 37
 lightpin2 = 26
 
-dt = datetime.datetime.now()
 
 while True:
+    dt = datetime.datetime.now()
     if dt.time() < datetime.time(23) and dt.time() > datetime.time(18):
         if not GPIO.getmode():
             logging.info('Dam drumu\' la instalatie')
