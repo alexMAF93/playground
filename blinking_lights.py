@@ -49,5 +49,5 @@ while True:
             GPIO.cleanup()
         else:
             logging.info('Inca nu!')
-        sleep(1800)
+        time.sleep(1800)
 
