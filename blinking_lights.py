@@ -18,13 +18,6 @@ def off_everything(pins):
             light_state(pin, False)
 
 
-def is_it_off(pins):
-    for pin in pins:
-        if GPIO.input(pin):
-            return False
-    return True
-
-
 logname = '/var/tmp/instalatie.log'
 logging.basicConfig(filename=logname, filemode='a', format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.DEBUG)
