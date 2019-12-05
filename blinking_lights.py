@@ -47,7 +47,5 @@ while True:
             logging.info('Oprim instalatia')
             off_everything([lightpin1, lightpin2])
             GPIO.cleanup()
-        else:
-            logging.info('Inca nu!')
-        time.sleep(1800)
+        time.sleep(1)
 
