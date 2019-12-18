@@ -28,7 +28,8 @@ lightpin2 = 26
 
 while True:
     dt = datetime.datetime.now()
-    if dt.time() < datetime.time(23) and dt.time() > datetime.time(18):
+    if (dt.time() < datetime.time(23) and dt.time() > datetime.time(18)) or \
+       (dt.time() > datetime.time(6) and dt.time() < datetime.time(9)):
         if not GPIO.getmode():
             logging.info('Dam drumu\' la instalatie')
             GPIO.setwarnings(False)
