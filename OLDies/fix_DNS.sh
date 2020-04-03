@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# test
 if [[ `nslookup x555lb 2>&1 >/dev/null; echo $?` == "0" ]]
 then
         printf "DNS is working properly ...\n"
