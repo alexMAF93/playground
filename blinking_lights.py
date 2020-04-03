@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-
+# test from VSC
 import time
 import RPi.GPIO as GPIO
 import datetime
