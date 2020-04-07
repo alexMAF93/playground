@@ -38,7 +38,8 @@ erl # check the Erlang installation
 
 
 display_message 3 Adding the RabbitMQ repo
-cat <<EOF >> /etc/yum.repos.d/rabbitmq-server.repo
+REPO_FILE=/etc/yum.repos.d/rabbitmq-server.repo
+test -s $REPO_FILE && cat <<EOF >> ${REPO_FILE}
 [rabbitmq-server]
 name=rabbitmq-server
 baseurl=https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch

@@ -68,7 +68,7 @@ systemctl enable docker
 if [[ "$USERNAME_TO_ADD" ]]
 then
     display_message 5 Adding the current user
-    usermod -aG docker $USERNAME_TO_ADD
+    usermod -a -G docker $USERNAME_TO_ADD
 fi
 
 
