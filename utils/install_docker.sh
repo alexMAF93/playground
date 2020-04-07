@@ -25,12 +25,14 @@ display_message() {
 if [[ $(command -v docker) ]]
 then
     display_message 5 Docker is already installed
+    exit 0
 fi
 
 
 if [[ "$1" == "-h" ]]
 then
     usage
+    exit 0
 elif [[ "$1" ]]
 then
     USERNAME_TO_ADD=$1
