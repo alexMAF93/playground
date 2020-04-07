@@ -10,6 +10,8 @@ cat<<EOF
     
     USERNAME:
         - you can specify an user that will be added in the docker group
+
+
 EOF
 }
 
@@ -40,10 +42,13 @@ fi
 
 
 display_message 5 Checking the OS version
-if [[ ! $(cat /etc/redhat-release) =~ "CentOS Linux release 8" ]]
+OS_VERS=$(cat /etc/redhat-release)
+if [[ ! "$OS_VERS" =~ "CentOS Linux release 8" ]]
 then
     printf "This script works only for CentOS 8\n\n"
     exit 27
+else
+    printf "${OS_VERS}\n"
 fi
 
 
