@@ -19,15 +19,15 @@ if [[ $ex_co -eq 0 ]]
 then
     mp3file=$(ls /tmp/ytdl | grep '.mp3' | head -1)
 else
-    echo "Failed to Download the the clip. Maybe youtube-dl needs to be updated."
+    echo "$(date) - Failed to Download the the clip. Maybe youtube-dl needs to be updated." >> /home/pi/media_player.log
 fi
 
 
 
-echo "Playing the file now..."
+echo "$(date) - Playing $mp3file" >> /home/pi/media_player.log
 /usr/bin/omxplayer -s -o local "$mp3file"
 
 cd /tmp
-echo "Deleting the file from the /tmp folder"
+echo "$(date) - Deleting the file from the /tmp folder" >> /home/pi/media_player.log
 rm -rfv /tmp/ytdl
 
