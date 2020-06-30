@@ -12,7 +12,7 @@ cd /tmp/ytdl
 
 
 ex_co=0
-youtube-dl -x --audio-format mp3 $YT_URL || ex_co=1
+/usr/local/bin/youtube-dl -x --audio-format mp3 $YT_URL || ex_co=1
 
 
 if [[ $ex_co -eq 0 ]]
@@ -25,7 +25,7 @@ fi
 
 
 echo "Playing the file now..."
-omxplayer -s -o local "$mp3file"
+/usr/bin/omxplayer -s -o local "$mp3file"
 
 cd /tmp
 echo "Deleting the file from the /tmp folder"
