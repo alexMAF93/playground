@@ -32,5 +32,5 @@ echo "$(date) - Playing $mp3file" >> $LOG_FILE
 
 cd /tmp
 echo "$(date) - Deleting the file from the /tmp folder" >> $LOG_FILE
-printf "$(rm -rfv /tmp/ytdl | sed s/^/----/g)\n" >> $LOG_FILE
+printf -- "$(rm -rfv /tmp/ytdl | sed s/^/----/g)\n" >> $LOG_FILE
 
