@@ -2,6 +2,8 @@
 
 
 YT_URL=$1
+LOG_FILE=/home/pi/media_player.log
+
 
 if [[ ! -d /tmp/ytdl ]]
 then
@@ -19,15 +21,16 @@ if [[ $ex_co -eq 0 ]]
 then
     mp3file=$(ls /tmp/ytdl | grep '.mp3' | head -1)
 else
-    echo "$(date) - Failed to Download the the clip. Maybe youtube-dl needs to be updated." >> /home/pi/media_player.log
+    echo "$(date) - Failed to Download the the clip. Maybe youtube-dl needs to be updated." >> $LOG_FILE
+    /usr/bin/fping www.google.ro &> /dev/null || echo "No internet connection" >> $LOG_FILE
+    exit 27
 fi
 
 
-
-echo "$(date) - Playing $mp3file" >> /home/pi/media_player.log
+echo "$(date) - Playing $mp3file" >> $LOG_FILE
 /usr/bin/omxplayer -s -o local "$mp3file"
 
 cd /tmp
-echo "$(date) - Deleting the file from the /tmp folder" >> /home/pi/media_player.log
-rm -rfv /tmp/ytdl
+echo "$(date) - Deleting the file from the /tmp folder" >> $LOG_FILE
+rm -rfv /tmp/ytdl >> $LOG_FILE
 
