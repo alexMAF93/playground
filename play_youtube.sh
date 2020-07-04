@@ -22,7 +22,7 @@ then
     mp3file=$(ls /tmp/ytdl | grep '.mp3' | head -1)
 else
     echo "$(date) - Failed to Download the the clip. Maybe youtube-dl needs to be updated." >> $LOG_FILE
-    /usr/bin/fping www.google.ro &> /dev/null || printf "\t\t\t\tNo internet connection\n" >> $LOG_FILE
+    /usr/bin/fping www.google.ro &> /dev/null || printf "----No internet connection\n" >> $LOG_FILE
     exit 27
 fi
 
@@ -32,5 +32,5 @@ echo "$(date) - Playing $mp3file" >> $LOG_FILE
 
 cd /tmp
 echo "$(date) - Deleting the file from the /tmp folder" >> $LOG_FILE
-printf "$(rm -rfv /tmp/ytdl | sed s/^/\\t\\t\\t\\t/g)\n" >> $LOG_FILE
+printf "$(rm -rfv /tmp/ytdl | sed s/^/----/g)\n" >> $LOG_FILE
 
